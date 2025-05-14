@@ -135,10 +135,10 @@
 
         layer_5 {
             bindings = <
-        &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
-        &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans    &trans  &trans  &trans
+        &trans  &trans  &trans  &trans  &trans    &trans  &kp UNDERSCORE  &kp EQUAL         &kp TILDE      &trans
+        &trans  &trans  &trans  &trans  &trans    &trans  &kp LESS_THAN   &kp GREATER_THAN  &kp BACKSLASH  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &kp AT_SIGN     &kp HASH          &trans         &trans  &trans
+                        &trans  &trans  &trans    &trans  &trans          &trans
             >;
         };
 
