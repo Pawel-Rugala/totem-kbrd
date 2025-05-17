@@ -42,7 +42,7 @@
         hr_lh_index: hr_lh_index {
             compatible = "zmk,behavior-hold-tap";
             label = "HR_LH_INDEX";
-            bindings = <&lt>, <&kp>;
+            bindings = <&mo>, <&kp>;
 
             #binding-cells = <2>;
             tapping-term-ms = <170>;
@@ -55,7 +55,7 @@
         hr_l_mid: hr_l_mid {
             compatible = "zmk,behavior-hold-tap";
             label = "HR_L_MID";
-            bindings = <&lt>, <&kp>;
+            bindings = <&mo>, <&kp>;
 
             #binding-cells = <2>;
             tapping-term-ms = <210>;
@@ -68,7 +68,7 @@
         hr_l_r: hr_l_r {
             compatible = "zmk,behavior-hold-tap";
             label = "HR_L_R";
-            bindings = <&lt>, <&kp>;
+            bindings = <&mo>, <&kp>;
 
             #binding-cells = <2>;
             tapping-term-ms = <240>;
@@ -81,7 +81,7 @@
         hr_l_p: hr_l_p {
             compatible = "zmk,behavior-hold-tap";
             label = "HR_L_P";
-            bindings = <&lt>, <&kp>;
+            bindings = <&mo>, <&kp>;
 
             #binding-cells = <2>;
             tapping-term-ms = <270>;
@@ -129,37 +129,37 @@
 
         hr_l_i {
             bindings = <
-        &trans     &trans        &trans        &trans  &trans    &trans  &trans  &trans  &trans  &trans
-        &kp LCTRL  &kp LEFT_ALT  &kp LEFT_GUI  &none   &trans    &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans        &trans        &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                                 &trans        &trans  &trans    &trans  &trans  &trans
+        &trans         &trans            &trans            &trans  &trans    &trans  &trans  &trans  &trans  &trans
+        &kp LS(LCTRL)  &kp LS(LEFT_ALT)  &kp RS(LEFT_GUI)  &none   &trans    &trans  &trans  &trans  &trans  &trans
+&trans  &trans         &trans            &trans            &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+                                         &trans            &trans  &trans    &trans  &trans  &trans
             >;
         };
 
         h_l_m {
             bindings = <
-        &trans     &trans        &trans  &trans          &trans    &trans  &trans  &trans  &trans  &trans
-        &kp LCTRL  &kp LEFT_ALT  &none   &kp LEFT_SHIFT  &trans    &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans        &trans  &trans          &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                                 &trans  &trans          &trans    &trans  &trans  &trans
+        &trans         &trans            &trans  &trans              &trans    &trans  &trans  &trans  &trans  &trans
+        &kp LG(LCTRL)  &kp LG(LEFT_ALT)  &none   &kp LG(LEFT_SHIFT)  &trans    &trans  &trans  &trans  &trans  &trans
+&trans  &trans         &trans            &trans  &trans              &trans    &trans  &trans  &trans  &trans  &trans  &trans
+                                         &trans  &trans              &trans    &trans  &trans  &trans
             >;
         };
 
         h_l_r {
             bindings = <
-        &trans     &trans  &trans        &trans          &trans    &trans  &trans  &trans  &trans  &trans
-        &kp LCTRL  &none   &kp LEFT_GUI  &kp LEFT_SHIFT  &trans    &trans  &trans  &trans  &trans  &trans
-&trans  &trans     &trans  &trans        &trans          &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                           &trans        &trans          &trans    &trans  &trans  &trans
+        &trans         &trans  &trans            &trans              &trans    &trans  &trans  &trans  &trans  &trans
+        &kp LA(LCTRL)  &none   &kp LA(LEFT_GUI)  &kp LA(LEFT_SHIFT)  &trans    &trans  &trans  &trans  &trans  &trans
+&trans  &trans         &trans  &trans            &trans              &trans    &trans  &trans  &trans  &trans  &trans  &trans
+                               &trans            &trans              &trans    &trans  &trans  &trans
             >;
         };
 
         h_l_p {
             bindings = <
-        &trans  &trans        &trans        &trans          &trans    &trans  &trans  &trans  &trans  &trans
-        &none   &kp LEFT_ALT  &kp LEFT_GUI  &kp LEFT_SHIFT  &trans    &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans        &trans        &trans          &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                              &trans        &trans          &trans    &trans  &trans  &trans
+        &trans  &trans            &trans            &trans              &trans    &trans  &trans  &trans  &trans  &trans
+        &none   &kp LC(LEFT_ALT)  &kp LC(LEFT_GUI)  &kp LC(LEFT_SHIFT)  &trans    &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans            &trans            &trans              &trans    &trans  &trans  &trans  &trans  &trans  &trans
+                                  &trans            &trans              &trans    &trans  &trans  &trans
             >;
         };
     };
