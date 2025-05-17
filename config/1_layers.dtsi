@@ -1,0 +1,36 @@
+#include <behaviors.dtsi>
+/* Include all behavior includes needed */
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/rgb.h>
+
+/* Automatically generated layer name #define */
+#define LAYER_QWERTY 0 
+#define LAYER_Typing 1
+#define LAYER_LeftPinky 2
+#define LAYER_LeftRingy 3
+#define LAYER_LeftMiddy 4
+#define LAYER_LeftIndex 5
+#define LAYER_RightPinky 6
+#define LAYER_RightRingy 7
+#define LAYER_RightMiddy 8
+#define LAYER_RightIndex 9
+#define LAYER_Cursor 10
+#define LAYER_Number 11
+#define LAYER_Function 12
+#define LAYER_Symbol 13
+#define LAYER_Mouse 14
+#define LAYER_MouseSlow 15
+#define LAYER_MouseFast 16
+#define LAYER_MouseWarp 17
+#define LAYER_System 18
+#define LAYER_Factory 19
+#define LAYER_Lower 20
+#define LAYER_Magic 21
+
+/* To deal with the situation where there is no Lower layer, to keep &lower happy */
+#ifndef LAYER_Lower
+#define LAYER_Lower 0
+#endif
+
