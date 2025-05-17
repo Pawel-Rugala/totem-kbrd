@@ -11,20 +11,1103 @@
 // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/pointing.h>
-#include "1_layers.dtsi"
-#include "2_system_behave.dtsi"
-#include "3_key_position.dtsi"
-#include "4_custom_behave.dtsi"
-#include "5_keycodes.dtsi"
-#include "6_combos.dtsi"
-#include "7_homerow.dtsi"
-#include "8_thumb.dtsi"
-#include "9_sticky.dtsi"
-#include "10_mouse.dtsi"
+
+
+/* Automatically generated layer name #define */
+#define LAYER_QWERTY 0 
+#define LAYER_Typing 1
+#define LAYER_LeftPinky 2
+#define LAYER_LeftRingy 3
+#define LAYER_LeftMiddy 4
+#define LAYER_LeftIndex 5
+#define LAYER_RightPinky 6
+#define LAYER_RightRingy 7
+#define LAYER_RightMiddy 8
+#define LAYER_RightIndex 9
+#define LAYER_Cursor 10
+#define LAYER_Number 11
+#define LAYER_Function 12
+#define LAYER_Symbol 13
+#define LAYER_Mouse 14
+#define LAYER_MouseSlow 15
+#define LAYER_MouseFast 16
+#define LAYER_MouseWarp 17
+#define LAYER_System 18
+#define LAYER_Factory 19
+#define LAYER_Lower 20
+#define LAYER_Magic 21
+
+/* To deal with the situation where there is no Lower layer, to keep &lower happy */
+#ifndef LAYER_Lower
+#define LAYER_Lower 0
+#endif
+
+
+/* Glove80 system behavior & macros */
+/ {
+    behaviors {
+        // For the "layer" key, it'd nice to be able to use it as either a shift or a toggle.
+        // Configure it as a tap dance, so the first tap (or hold) is a &mo and the second tap is a &to
+        lower: lower {
+            compatible = "zmk,behavior-tap-dance";
+            label = "LAYER_TAP_DANCE";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&mo LAYER_Lower>, <&to LAYER_Lower>;
+        };
+    };
+};
+
+/ {
+    macros {
+        rgb_ug_status_macro: rgb_ug_status_macro {
+            label = "RGB_UG_STATUS";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&rgb_ug RGB_STATUS>;
+        };
+    };
+};
+
+
+/ {
+#ifdef BT_DISC_CMD
+    behaviors {
+        bt_0: bt_0 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "BT_0";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&bt_select_0>, <&bt BT_DISC 0>;
+        };
+        bt_1: bt_1 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "BT_1";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&bt_select_1>, <&bt BT_DISC 1>;
+        };
+        bt_2: bt_2 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "BT_2";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&bt_select_2>, <&bt BT_DISC 2>;
+        };
+        bt_3: bt_3 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "BT_3";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&bt_select_3>, <&bt BT_DISC 3>;
+        };
+    };
+    macros {
+        bt_select_0: bt_select_0 {
+            label = "BT_SELECT_0";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&out OUT_BLE>,
+                  <&bt BT_SEL 0>;
+        };
+        bt_select_1: bt_select_1 {
+            label = "BT_SELECT_1";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&out OUT_BLE>,
+                  <&bt BT_SEL 1>;
+        };
+        bt_select_2: bt_select_2 {
+            label = "BT_SELECT_2";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&out OUT_BLE>,
+                  <&bt BT_SEL 2>;
+        };
+        bt_select_3: bt_select_3 {
+            label = "BT_SELECT_3";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&out OUT_BLE>,
+                  <&bt BT_SEL 3>;
+        };
+    };
+#else
+    macros {
+        bt_0: bt_0 {
+            label = "BT_0";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&out OUT_BLE>,
+                  <&bt BT_SEL 0>;
+        };
+        bt_1: bt_1 {
+            label = "BT_1";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&out OUT_BLE>,
+                  <&bt BT_SEL 1>;
+        };
+        bt_2: bt_2 {
+            label = "BT_2";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&out OUT_BLE>,
+                  <&bt BT_SEL 2>;
+        };
+        bt_3: bt_3 {
+            label = "BT_3";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&out OUT_BLE>,
+                  <&bt BT_SEL 3>;
+        };
+    };
+#endif
+};
+
+/ {
+    behaviors {
+        magic: magic {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MAGIC_HOLD_TAP";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&mo>, <&rgb_ug_status_macro>;
+        };
+    };
+};
+
+#define POS_LH_T1 26
+#define POS_LH_T2 27
+#define POS_LH_T3 28
+#define POS_LH_C1R1 5
+#define POS_LH_C1R2 15
+#define POS_LH_C1R3 25
+#define POS_LH_C2R1 4
+#define POS_LH_C2R2 14
+#define POS_LH_C2R3 24
+#define POS_LH_C3R1 3
+#define POS_LH_C3R2 13
+#define POS_LH_C3R3 23
+#define POS_LH_C4R1 2
+#define POS_LH_C4R2 12
+#define POS_LH_C4R3 22
+#define POS_LH_C5R1 1
+#define POS_LH_C5R2 11
+#define POS_LH_C5R3 21
+#define POS_LH_C6R1 0
+#define POS_RH_T1 35
+#define POS_RH_T2 36
+#define POS_RH_T3 37
+#define POS_RH_C1R1 6
+#define POS_RH_C1R2 16
+#define POS_RH_C1R3 29
+#define POS_RH_C2R1 7
+#define POS_RH_C2R2 17
+#define POS_RH_C2R3 30
+#define POS_RH_C3R1 8
+#define POS_RH_C3R2 18
+#define POS_RH_C3R3 31
+#define POS_RH_C4R1 9
+#define POS_RH_C4R2 19
+#define POS_RH_C4R3 32
+#define POS_RH_C5R1 10
+#define POS_RH_C5R2 20
+#define POS_RH_C5R3 33
+#define POS_RH_C6R1 34
+
+
+
+  // |------------------------|------------------------|
+  // | LEFT_HAND_KEYS         |        RIGHT_HAND_KEYS |
+  // |                        |                        |
+  // |     1  2  3  4  5      |       6  7  8  9 10    |
+  // |    11 12 13 14 15      |      16 17 18 19 20    |
+  // |  0 21 22 23 24 25      |      29 30 31 32 33 34 |
+  // |             26 27 28   |   35 36 37             |
+  // |------------------------|------------------------|
+  //
+  #define LEFT_HAND_KEYS      \
+             1  2  3  4  5    \
+            11 12 13 14 15    \
+          0 21 22 23 24 25    \
+  #define RIGHT_HAND_KEYS     \
+                                        6  7  8  9 10    \
+                                       16 17 18 19 20    \
+                                       29 30 31 32 33 34 \
+  #define THUMB_KEYS          \
+                     26 27 28       35 36 37             \
+
+#define ENABLE_MOUSE_KEYS  // requires v24.12-beta or newer firmware
+//#define NATURAL_SCROLLING  // supports "natural scrolling" in macOS
+#define OPERATING_SYSTEM 'M' // choose 'L'inux, 'M'acOS, or 'W'indows
+#define DIFFICULTY_LEVEL  0  // 0:custom, 1:easy -> 5:hard (see below)
+#define ENFORCE_BILATERAL    // cancels single-handed home row mod+tap
+#define SPACE_FORGIVENESS    // allow lingering taps on the space bar
+//#define THUMB_FORGIVENESS  // allow lingering taps on the thumb keys
+//#define SHIFT_FORGIVENESS  // requires v24.08-beta or newer firmware
+#define WORLD_USE_COMPOSE    // use native Compose in place of Unicode
+//#define WORLD_HOST_AZERTY  // host computer is set to AZERTY locale
+//#define WORLD_SHIFT_NUMBER // apply Shift to type number row digits
+#define TAPPING_RESOLUTION 150
+#define ENFORCE_BILATERAL
+
+#ifndef OPERATING_SYSTEM
+//#define OPERATING_SYSTEM 'L' // linux
+#define OPERATING_SYSTEM 'M' // macos
+//#define OPERATING_SYSTEM 'W' // windows
+#endif
+#if OPERATING_SYSTEM == 'M'
+  #define _C      LG
+  #define _A_TAB  LGUI
+  #define _G_TAB  LALT
+  #define _REDO   _C(LS(Z))
+  #define _POWER  K_POWER
+  #define _W      LA
+  #define _HOME   _C(LEFT)
+  #define _END    _C(RIGHT)
+  #define _EMOJI  LG(LC(SPACE))
+#else
+  #define _C      LC
+  #define _A_TAB  LALT
+  #define _G_TAB  LGUI
+  #define _REDO   _C(Y)
+  #define _POWER  C_POWER
+  #define _W      _C
+  #define _HOME   HOME
+  #define _END    END
+  #define _EMOJI  LG(DOT)
+#endif
+#define _SLEEP      C_SLEEP
+#if OPERATING_SYSTEM == 'W'
+  #define _LOCK   LG(L)
+#elif OPERATING_SYSTEM == 'M'
+  #define _LOCK   _C(LC(Q))
+#elif OPERATING_SYSTEM == 'L'
+  #define _LOCK   K_LOCK
+#endif
+#define _UNDO       _C(Z)
+#define _CUT        _C(X)
+#define _COPY       _C(C)
+#define _PASTE      _C(V)
+#define _FIND       _C(F)
+#define _FIND_NEXT  _C(G)
+#define _FIND_PREV  _C(LS(G))
+
+//
+// USE_NUMPAD_KEYCODES puts `KP_*` keycodes into the Number layer.
+//
+#ifdef USE_NUMPAD_KEYCODES
+#define _KP_N0 KP_N0
+#define _KP_N1 KP_N1
+#define _KP_N2 KP_N2
+#define _KP_N3 KP_N3
+#define _KP_N4 KP_N4
+#define _KP_N5 KP_N5
+#define _KP_N6 KP_N6
+#define _KP_N7 KP_N7
+#define _KP_N8 KP_N8
+#define _KP_N9 KP_N9
+#define _KP_PLUS KP_PLUS
+#define _KP_MINUS KP_MINUS
+#define _KP_ASTERISK KP_ASTERISK
+#define _KP_SLASH KP_SLASH
+#define _KP_COMMA KP_COMMA
+#define _KP_DOT KP_DOT
+#define _KP_EQUAL KP_EQUAL
+#define _KP_ENTER KP_ENTER
+#else
+#define _KP_N0 N0
+#define _KP_N1 N1
+#define _KP_N2 N2
+#define _KP_N3 N3
+#define _KP_N4 N4
+#define _KP_N5 N5
+#define _KP_N6 N6
+#define _KP_N7 N7
+#define _KP_N8 N8
+#define _KP_N9 N9
+#define _KP_PLUS PLUS
+#define _KP_MINUS MINUS
+#define _KP_ASTERISK ASTERISK
+#define _KP_SLASH SLASH
+#define _KP_COMMA COMMA
+#define _KP_DOT DOT
+#define _KP_EQUAL EQUAL
+#define _KP_ENTER ENTER
+#endif
+
+//
+// Keymap specific knowledge of the base layer's alpha + ZMK layout
+//
+#if defined(LAYER_QWERTY) && LAYER_QWERTY == 0
+#define KEY_LH_C6R1 UP
+#define KEY_LH_C5R1 DOWN
+#define KEY_LH_C4R1 A
+#define KEY_LH_C3R1 B
+#define KEY_LH_C2R1 C
+#define KEY_RH_C2R1 D
+#define KEY_RH_C3R1 E
+#define KEY_RH_C4R1 F
+#define KEY_RH_C5R1 LEFT
+#define KEY_RH_C6R1 RIGHT
+#define KEY_LH_C6R2 EQUAL
+#define KEY_LH_C5R2 N1
+#define KEY_LH_C4R2 N2
+#define KEY_LH_C3R2 N3
+#define KEY_LH_C2R2 N4
+#define KEY_LH_C1R2 N5
+#define KEY_RH_C1R2 N6
+#define KEY_RH_C2R2 N7
+#define KEY_RH_C3R2 N8
+#define KEY_RH_C4R2 N9
+#define KEY_RH_C5R2 N0
+#define KEY_RH_C6R2 MINUS
+#define KEY_LH_C6R3 TAB
+#define KEY_LH_C5R3 Q
+#define KEY_LH_C4R3 W
+#define KEY_LH_C3R3 E
+#define KEY_LH_C2R3 R
+#define KEY_LH_C1R3 T
+#define KEY_RH_C1R3 Y
+#define KEY_RH_C2R3 U
+#define KEY_RH_C3R3 I
+#define KEY_RH_C4R3 O
+#define KEY_RH_C5R3 P
+#define KEY_RH_C6R3 BSLH
+#define KEY_LH_C6R4 CAPS
+#define KEY_LH_C5R4 A
+#define KEY_LH_C4R4 S
+#define KEY_LH_C3R4 D
+#define KEY_LH_C2R4 F
+#define KEY_LH_C1R4 G
+#define KEY_RH_C1R4 H
+#define KEY_RH_C2R4 J
+#define KEY_RH_C3R4 K
+#define KEY_RH_C4R4 L
+#define KEY_RH_C5R4 SEMI
+#define KEY_RH_C6R4 SQT
+#define KEY_LH_C6R5 LSFT
+#define KEY_LH_C5R5 Z
+#define KEY_LH_C4R5 X
+#define KEY_LH_C3R5 C
+#define KEY_LH_C2R5 V
+#define KEY_LH_C1R5 B
+#define KEY_LH_T1 ESC
+#define KEY_LH_T2 K_APP
+#define KEY_LH_T3 0
+#define KEY_RH_T3 0
+#define KEY_RH_T2 INSERT
+#define KEY_RH_T1 ENTER
+#define KEY_RH_C1R5 N
+#define KEY_RH_C2R5 M
+#define KEY_RH_C3R5 COMMA
+#define KEY_RH_C4R5 DOT
+#define KEY_RH_C5R5 FSLH
+#define KEY_RH_C6R5 RSFT
+#define KEY_LH_C6R6 0
+#define KEY_LH_C5R6 GRAVE
+#define KEY_LH_C4R6 LBKT
+#define KEY_LH_C3R6 RBKT
+#define KEY_LH_C2R6 LSFT
+#define KEY_LH_T4 BACKSPACE
+#define KEY_LH_T5 DELETE
+#define KEY_LH_T6 0
+#define KEY_RH_T6 0
+#define KEY_RH_T5 TAB
+#define KEY_RH_T4 SPACE
+#define KEY_RH_C2R6 RSFT
+#define KEY_RH_C3R6 LPAR
+#define KEY_RH_C4R6 RPAR
+#define KEY_RH_C5R6 BSLH
+#define KEY_RH_C6R6 0
+#endif
+
+combos {
+  compatible = "zmk,combos";
+
+  //
+  // COMBO_FIRING_DECAY defines how much time you have left (milliseconds)
+  // after pressing the first key in a ZMK combo to finish the whole chord.
+  //
+  #ifndef COMBO_FIRING_DECAY
+  #define COMBO_FIRING_DECAY 50
+  #endif
+  #ifdef LAYER_Cursor
+  #ifdef _A_TAB
+  combo_alt_tab_switcher {
+    timeout-ms = <COMBO_FIRING_DECAY>;
+    key-positions = <POS_LH_T4 POS_LH_T1>;
+    bindings = <&mod_tab_chord _A_TAB LAYER_Cursor>;
+    layers = <0 1 2 3 4 5 6 7>;
+  };
+  #endif
+
+  combo_ctrl_tab_switcher {
+    timeout-ms = <COMBO_FIRING_DECAY>;
+    key-positions = <POS_LH_T4 POS_LH_T5>;
+    bindings = <&mod_tab_chord LCTL LAYER_Cursor>;
+    layers = <0 1 2 3 4 5 6 7>;
+  };
+  #endif
+
+  combo_sticky_hyper_right {
+    timeout-ms = <COMBO_FIRING_DECAY>;
+    key-positions = <POS_RH_T1 POS_RH_T4>;
+    bindings = <&sk LG(LA(LC(LSHFT)))>;
+    layers = <0 1 2 3 4 5 6 7>;
+  };
+
+  combo_sticky_meh_right {
+    timeout-ms = <COMBO_FIRING_DECAY>;
+    key-positions = <POS_RH_T4 POS_RH_T5>;
+    bindings = <&sk LA(LC(LSHFT))>;
+    layers = <0 1 2 3 4 5 6 7>;
+  };
+
+  combo_sticky_AltGr_left {
+    timeout-ms = <COMBO_FIRING_DECAY>;
+    key-positions = <POS_LH_T2 POS_LH_T5>;
+    bindings = <&sk RALT>;
+    layers = <0 1 2 3 4 5 6 7>;
+  };
+
+  combo_sticky_AltGr_right {
+    timeout-ms = <COMBO_FIRING_DECAY>;
+    key-positions = <POS_RH_T2 POS_RH_T5>;
+    bindings = <&sk RALT>;
+    layers = <0 1 2 3 4 5 6 7>;
+  };
+
+  combo_caps_lock {
+    timeout-ms = <COMBO_FIRING_DECAY>;
+    key-positions = <POS_LH_T6 POS_RH_T6>;
+    bindings = <&kp CAPSLOCK>;
+    layers = <0 1 2 3 4 5 6 7>;
+  };
+
+};
+
+  //
+  // The *_FINGER_MOD specify which modifiers are used by home row mod keys.
+  // Here, we use Miryoku's "GACS" (Win, Alt, Ctrl, Shift) order by default,
+  // unless OPERATING_SYSTEM is macOS, in which case Win & Ctrl are swapped,
+  // unless MACOS_USE_GACS is also defined to suppress that Win & Ctrl swap.
+  //
+  #ifndef PINKY_FINGER_MOD
+    #if OPERATING_SYSTEM == 'M' && !defined(MACOS_USE_GACS)
+      #define PINKY_FINGER_MOD LCTL
+    #else
+      #define PINKY_FINGER_MOD LGUI
+    #endif
+  #endif
+  #ifndef RINGY_FINGER_MOD
+  #define RINGY_FINGER_MOD LALT
+  #endif
+  #ifndef MIDDY_FINGER_MOD
+    #if OPERATING_SYSTEM == 'M' && !defined(MACOS_USE_GACS)
+      #define MIDDY_FINGER_MOD LGUI
+    #else
+      #define MIDDY_FINGER_MOD LCTL
+    #endif
+  #endif
+  #ifndef INDEX_FINGER_MOD
+  #define INDEX_FINGER_MOD LSFT
+  #endif
+  //
+  // The following settings let you configure mods individually, per finger:
+  //
+  #ifndef LEFT_PINKY_MOD
+  #define LEFT_PINKY_MOD PINKY_FINGER_MOD
+  #endif
+  #ifndef RIGHT_PINKY_MOD
+  #define RIGHT_PINKY_MOD PINKY_FINGER_MOD
+  #endif
+  #ifndef LEFT_RINGY_MOD
+  #define LEFT_RINGY_MOD RINGY_FINGER_MOD
+  #endif
+  #ifndef RIGHT_RINGY_MOD
+  #define RIGHT_RINGY_MOD RINGY_FINGER_MOD
+  #endif
+  #ifndef LEFT_MIDDY_MOD
+  #define LEFT_MIDDY_MOD MIDDY_FINGER_MOD
+  #endif
+  #ifndef RIGHT_MIDDY_MOD
+  #define RIGHT_MIDDY_MOD MIDDY_FINGER_MOD
+  #endif
+  #ifndef LEFT_INDEX_MOD
+  #define LEFT_INDEX_MOD INDEX_FINGER_MOD
+  #endif
+  #ifndef RIGHT_INDEX_MOD
+  #define RIGHT_INDEX_MOD INDEX_FINGER_MOD
+  #endif
+
+  //
+  // HOMEY_HOLDING_TYPE defines the flavor of ZMK hold-tap behavior to use
+  // for the pinky, ring, and middle fingers (which are assigned to Super,
+  // Alt, and Ctrl respectively in the Miryoku system) on home row keys.
+  //
+  #ifndef HOMEY_HOLDING_TYPE
+  #define HOMEY_HOLDING_TYPE "tap-preferred"
+  #endif
+
+  //
+  // HOMEY_HOLDING_TIME defines how long you need to hold (milliseconds)
+  // home row mod keys in order to send their modifiers to the computer
+  // (i.e. "register" them) for mod-click mouse usage (e.g. Ctrl-Click).
+  //
+  #ifndef HOMEY_HOLDING_TIME
+  #define HOMEY_HOLDING_TIME (TAPPING_RESOLUTION + 90)
+  #endif
+  #ifndef INDEX_HOLDING_TIME
+  #define INDEX_HOLDING_TIME (TAPPING_RESOLUTION + 20)
+  #endif
+  #ifndef MIDDY_HOLDING_TIME
+  #define MIDDY_HOLDING_TIME (TAPPING_RESOLUTION + 60)
+  #endif
+  #ifndef RINGY_HOLDING_TIME
+  #define RINGY_HOLDING_TIME (TAPPING_RESOLUTION + 90)
+  #endif
+  #ifndef PINKY_HOLDING_TIME
+  #define PINKY_HOLDING_TIME (TAPPING_RESOLUTION + 110)
+  #endif
+
+  //
+  // HOMEY_STREAK_DECAY defines how long you need to wait (milliseconds)
+  // after typing before you can use home row mods again.  It prevents
+  // unintended activation of home row mods when you're actively typing.
+  //
+  #ifndef HOMEY_STREAK_DECAY
+  #define HOMEY_STREAK_DECAY TAPPING_RESOLUTION
+  #endif
+
+  //
+  // HOMEY_REPEAT_DECAY defines how much time you have left (milliseconds)
+  // after tapping a key to hold it again in order to make it auto-repeat.
+  //
+  #ifndef HOMEY_REPEAT_DECAY
+  #define HOMEY_REPEAT_DECAY (TAPPING_RESOLUTION + 150)
+  #endif // "tap then hold" for key auto-repeat
+
+  //
+  // CHORD_HOLDING_TYPE defines the flavor of ZMK hold-tap behavior to use
+  // for chorded home row mods (secondary keypresses in multi-mod chords).
+  //
+  #ifndef CHORD_HOLDING_TYPE
+  #define CHORD_HOLDING_TYPE HOMEY_HOLDING_TYPE
+  #endif
+
+  //
+  // CHORD_HOLDING_TIME defines how long you need to hold (milliseconds)
+  // home row mod keys in order to send their modifiers to the computer
+  // (i.e. "register" them) for mod-click mouse usage (e.g. Ctrl-Click).
+  // This is specifically for secondary keypresses in multi-mod chords.
+  //
+  #ifndef CHORD_HOLDING_TIME
+  #define CHORD_HOLDING_TIME TAPPING_RESOLUTION
+  #endif
+
+  //
+  // CHORD_STREAK_DECAY defines how long you need to wait (milliseconds)
+  // after typing before you can use home row mods again.  It prevents
+  // unintended activation of home row mods when you're actively typing
+  // This is specifically for secondary keypresses in multi-mod chords.
+  //
+  #ifndef CHORD_STREAK_DECAY
+  #define CHORD_STREAK_DECAY HOMEY_STREAK_DECAY
+  #endif
+
+  //
+  // CHORD_REPEAT_DECAY defines how much time you have left (milliseconds)
+  // after tapping a key to hold it again in order to make it auto-repeat.
+  // This is specifically for secondary keypresses in multi-mod chords.
+  //
+  #ifndef CHORD_REPEAT_DECAY
+  #define CHORD_REPEAT_DECAY HOMEY_REPEAT_DECAY
+  #endif
+
+  //
+  // INDEX_HOLDING_TYPE defines the flavor of ZMK hold-tap behavior to use
+  // for index fingers (which Miryoku assigns to Shift) on home row keys.
+  //
+  // NOTE: The "tap-preferred" flavor of ZMK hold-tap for index finger keys
+  // allows faster activation of the Shift modifier (without having to wait
+  // for the modified key to be released as the "balanced" flavor requires).
+  //
+  #ifndef INDEX_HOLDING_TYPE
+  #define INDEX_HOLDING_TYPE "tap-preferred"
+  #endif
+
+  //
+  // INDEX_STREAK_DECAY defines how long you need to wait (milliseconds)
+  // after typing before you can use home row mods again.  It prevents
+  // unintended activation of home row mods when you're actively typing.
+  //
+  #ifndef INDEX_STREAK_DECAY
+  #define INDEX_STREAK_DECAY (TAPPING_RESOLUTION - 50)
+  #endif
+
+  //
+  // INDEX_REPEAT_DECAY defines how much time you have left (milliseconds)
+  // after tapping a key to hold it again in order to make it auto-repeat.
+  //
+  #ifndef INDEX_REPEAT_DECAY
+  #define INDEX_REPEAT_DECAY (TAPPING_RESOLUTION + 150)
+  #endif // "tap then hold" for key auto-repeat
+
+  //
+  // PLAIN_HOLDING_TYPE defines the flavor of ZMK hold-tap behavior to use
+  // for index fingers (which Miryoku assigns to Shift) on home row keys.
+  //
+  // NOTE: The "tap-preferred" flavor of ZMK hold-tap for index finger keys
+  // allows faster activation of the Shift modifier (without having to wait
+  // for the modified key to be released as the "balanced" flavor requires).
+  //
+  #ifndef PLAIN_HOLDING_TYPE
+  #define PLAIN_HOLDING_TYPE INDEX_HOLDING_TYPE
+  #endif
+
+  //
+  // PLAIN_HOLDING_TIME defines how long you need to hold (milliseconds)
+  // index finger keys in order to send their modifiers to the computer
+  // (i.e. "register" them) for mod-click mouse usage (e.g. Shift-Click).
+  //
+  #ifndef PLAIN_HOLDING_TIME
+  #define PLAIN_HOLDING_TIME (TAPPING_RESOLUTION + 50)
+  #endif
+
+  //
+  // PLAIN_STREAK_DECAY defines how long you need to wait (milliseconds)
+  // after typing before you can use home row mods again.  It prevents
+  // unintended activation of home row mods when you're actively typing.
+  //
+  #ifndef PLAIN_STREAK_DECAY
+  #define PLAIN_STREAK_DECAY HOMEY_STREAK_DECAY
+  #endif
+
+  //
+  // PLAIN_REPEAT_DECAY defines how much time you have left (milliseconds)
+  // after tapping a key to hold it again in order to make it auto-repeat.
+  //
+  #ifndef PLAIN_REPEAT_DECAY
+  #define PLAIN_REPEAT_DECAY (TAPPING_RESOLUTION + 150)
+  #endif // "tap then hold" for key auto-repeat
+
+  //
+  // THUMB_HOLDING_TYPE defines the flavor of ZMK hold-tap behavior to use
+  // for the thumbs (which are assigned to 6 layers in the Miryoku system).
+  //
+  // NOTE: The "balanced" flavor of ZMK hold-tap provides instant modifier
+  // activation for the symbol layer (if the tapped symbol key is released
+  // while the thumb layer key is still held down) for quicker programming.
+  //
+  #ifndef THUMB_HOLDING_TYPE
+  #define THUMB_HOLDING_TYPE "balanced"
+  #endif
+
+  //
+  // THUMB_HOLDING_TIME defines how long you need to hold (milliseconds)
+  // a thumb key to activate a layer.  Shorter holds are treated as taps.
+  //
+  #ifndef THUMB_HOLDING_TIME
+  #define THUMB_HOLDING_TIME (TAPPING_RESOLUTION + 50)
+  #endif
+
+  //
+  // THUMB_REPEAT_DECAY defines how much time you have left (milliseconds)
+  // after tapping a key to hold it again in order to make it auto-repeat.
+  //
+  #ifndef THUMB_REPEAT_DECAY
+  #define THUMB_REPEAT_DECAY (TAPPING_RESOLUTION + 150)
+  #endif // "tap then hold" for key auto-repeat
+
+  //
+  // SPACE_HOLDING_TYPE defines the flavor of ZMK hold-tap behavior to use
+  // for spacebar (assigned to the right thumb's home position by default).
+  //
+  #ifndef SPACE_HOLDING_TYPE
+  #define SPACE_HOLDING_TYPE THUMB_HOLDING_TYPE
+  #endif
+
+  //
+  // SPACE_HOLDING_TIME defines how long you need to hold (milliseconds)
+  // the space thumb key to activate.  Shorter holds are treated as taps.
+  //
+  #ifndef SPACE_HOLDING_TIME
+  #define SPACE_HOLDING_TIME (TAPPING_RESOLUTION + 20)
+  #endif
+
+  //
+  // SPACE_REPEAT_DECAY defines how much time you have left (milliseconds)
+  // after tapping a key to hold it again in order to make it auto-repeat.
+  //
+  #ifndef SPACE_REPEAT_DECAY
+  #define SPACE_REPEAT_DECAY TAPPING_RESOLUTION
+  #endif
+
+  #define LEFT_PINKY_KEY  KEY_LH_C5R2
+  #define LEFT_RINGY_KEY  KEY_LH_C4R2
+  #define LEFT_MIDDY_KEY  KEY_LH_C3R2
+  #define LEFT_INDEX_KEY  KEY_LH_C2R2
+
+  #define RIGHT_PINKY_KEY KEY_RH_C5R2
+  #define RIGHT_RINGY_KEY KEY_RH_C4R2
+  #define RIGHT_MIDDY_KEY KEY_RH_C3R2
+  #define RIGHT_INDEX_KEY KEY_RH_C2R2
+
+
+  //
+  // Thumb cluster hold-tap keys for Miryoku layers
+  //
+  thumb: thumb_layer_access {
+    compatible = "zmk,behavior-hold-tap";
+    flavor = THUMB_HOLDING_TYPE;
+    tapping-term-ms = <THUMB_HOLDING_TIME>;
+    quick-tap-ms = <THUMB_REPEAT_DECAY>; // enable repeat
+    #binding-cells = <2>;
+    bindings = <&mo>, <&kp>;
+  };
+  thumb_parang_left: thumb_layer_access_parang_left {
+    compatible = "zmk,behavior-hold-tap";
+    flavor = THUMB_HOLDING_TYPE;
+    tapping-term-ms = <THUMB_HOLDING_TIME>;
+    quick-tap-ms = <THUMB_REPEAT_DECAY>; // enable repeat
+    #binding-cells = <2>;
+    bindings = <&mo>, <&parang_left>;
+  };
+  stumb: thumb_layer_access_sticky_key_oneshot {
+    compatible = "zmk,behavior-hold-tap";
+    flavor = THUMB_HOLDING_TYPE;
+    tapping-term-ms = <THUMB_HOLDING_TIME>;
+    quick-tap-ms = <THUMB_REPEAT_DECAY>; // enable repeat
+    #binding-cells = <2>;
+    bindings = <&mo>, <&sticky_key_oneshot>;
+  };
+  crumb: thumb_layer_access_retro_tap {
+    compatible = "zmk,behavior-hold-tap";
+    flavor = THUMB_HOLDING_TYPE;
+    tapping-term-ms = <THUMB_HOLDING_TIME>;
+    quick-tap-ms = <THUMB_REPEAT_DECAY>; // enable repeat
+    #binding-cells = <2>;
+    bindings = <&mo>, <&kp>;
+    #ifdef THUMB_FORGIVENESS
+    retro-tap;
+    #endif
+  };
+  space: thumb_layer_access_spacebar {
+    compatible = "zmk,behavior-hold-tap";
+    flavor = SPACE_HOLDING_TYPE;
+    tapping-term-ms = <SPACE_HOLDING_TIME>;
+    quick-tap-ms = <SPACE_REPEAT_DECAY>; // enable repeat
+    #binding-cells = <2>;
+    bindings = <&mo>, <&kp>;
+    #ifdef SPACE_FORGIVENESS
+    retro-tap; // tap on standalone hold
+    #endif
+  };
+
+  //////////////////////////////////////////////////////////////////////////
+  //
+  // &sk (sticky key) variant that is truly one-shot
+  //
+  //////////////////////////////////////////////////////////////////////////
+
+  //
+  // STICKY_1SHOT_DECAY defines how much time you have left (milliseconds)
+  // after tapping a sticky key before it expires (won't apply to next tap).
+  //
+  #ifndef STICKY_1SHOT_DECAY
+  #define STICKY_1SHOT_DECAY 500
+  #endif
+
+  //
+  // STICKY_HOLDING_TIME defines how long you need to hold (milliseconds)
+  // sticky one-shot keys in order to trigger their hold (not tap) action.
+  //
+  #ifndef STICKY_HOLDING_TIME
+  #define STICKY_HOLDING_TIME (TAPPING_RESOLUTION + 50)
+  #endif
+
+  sticky_key_modtap: sticky_key_modtap {
+    compatible = "zmk,behavior-hold-tap";
+    flavor = "tap-preferred";
+    tapping-term-ms = <STICKY_HOLDING_TIME>;
+    #binding-cells = <2>;
+    bindings = <&kp>, <&sticky_key_oneshot>;
+  };
+  sticky_key_oneshot: sticky_key_oneshot_macro {
+    compatible = "zmk,behavior-macro-one-param";
+    wait-ms = <0>;
+    tap-ms = <0>;
+    #binding-cells = <1>;
+    bindings
+      = <&macro_param_1to1>
+      , <&macro_tap &sticky_key_quickrel MACRO_PLACEHOLDER>
+      ;
+  };
+  sticky_key_quickrel: sticky_key_quick_release {
+    compatible = "zmk,behavior-sticky-key";
+    #binding-cells = <1>;
+    bindings = <&kp>;
+    release-after-ms = <STICKY_1SHOT_DECAY>;
+    quick-release;
+    ignore-modifiers;
+  };
+
+  behavior_caps_word {
+    continue-list = <
+      UNDERSCORE MINUS
+      BACKSPACE DELETE
+      N1 N2 N3 N4 N5 N6 N7 N8 N9 N0
+    >;
+  };
+
+
+//////////////////////////////////////////////////////////////////////////
+//
+// Mouse keys (keyboard mouse control) requires v24.12 firmware or newer:
+// override the "HID_POINTING" setting to "y" in Advanced Configuration
+// and then select "v24.12" firmware from the drop-down menu located at
+// Glove80 Layout Editor > Settings > Advanced Settings > Firmware Version
+//
+// Alternatively, you can use either PR36 or PR23 beta firmware for this:
+// select "community.pr36.mouse-keys" from the drop-down menu located at
+// Glove80 Layout Editor > Settings > Advanced Settings > Firmware Version
+//
+// - https://github.com/moergo-sc/zmk/pull/36
+// - https://github.com/moergo-sc/zmk/pull/23
+// - https://gist.github.com/krissen/dd27082e7ab0575619c7a31f4d2ec7ae
+// - https://github.com/zmkfirmware/zmk/compare/main...urob:zmk:mouse-3.2
+// - https://github.com/caksoylar/zmk-config/commit/0020c23c544cd7111013f0114609d1fb90e0e475
+// - https://github.com/caksoylar/zmk-config/commit/e35ee2f08788927683df7bbdd7fc73434473886e
+//
+//////////////////////////////////////////////////////////////////////////
+
+//
+// NATURAL_SCROLLING reverses the directionality of the mouse scroll wheel
+// to support "natural scrolling" in macOS and other desktop environments.
+//
+//#define NATURAL_SCROLLING
+
+#ifdef NATURAL_SCROLLING
+  #define MOUSE_SCROLL_UP    SCRL_DOWN
+  #define MOUSE_SCROLL_DOWN  SCRL_UP
+  #define MOUSE_SCROLL_LEFT  SCRL_RIGHT
+  #define MOUSE_SCROLL_RIGHT SCRL_LEFT
+#else
+  #define MOUSE_SCROLL_UP    SCRL_UP
+  #define MOUSE_SCROLL_DOWN  SCRL_DOWN
+  #define MOUSE_SCROLL_LEFT  SCRL_LEFT
+  #define MOUSE_SCROLL_RIGHT SCRL_RIGHT
+#endif
+
+//
+// MOUSE_MOTION_DELAY defines how long to wait (milliseconds) before starting
+// to move the mouse pointer.
+//
+#ifndef MOUSE_MOTION_DELAY
+#define MOUSE_MOTION_DELAY 0
+#endif
+
+//
+// MOUSE_MOTION_ACCELERATION_EXPONENT sets how the mouse pointer accelerates:
+//
+// acceleration exponent 0: uniform speed
+// acceleration exponent 1: uniform acceleration
+// acceleration exponent 2: uniform jerk
+//
+#ifndef MOUSE_MOTION_ACCELERATION_EXPONENT
+#define MOUSE_MOTION_ACCELERATION_EXPONENT 1
+#endif
+
+//
+// MOUSE_MOTION_TIME_TO_MAXIMUM_SPEED defines how long to wait (milliseconds)
+// before the mouse pointer speed is suddenly boosted to the maximum value.
+//
+#ifndef MOUSE_MOTION_TIME_TO_MAXIMUM_SPEED
+#define MOUSE_MOTION_TIME_TO_MAXIMUM_SPEED 300
+#endif
+
+//
+// MOUSE_MOTION_MAXIMUM_SPEED defines how quickly the mouse pointer can move.
+//
+#ifndef MOUSE_MOTION_MAXIMUM_SPEED
+#define MOUSE_MOTION_MAXIMUM_SPEED 600
+#endif
+
+//
+// MOUSE_SCROLL_DELAY defines how long to wait (milliseconds) before starting
+// to move the mouse pointer.
+//
+#ifndef MOUSE_SCROLL_DELAY
+#define MOUSE_SCROLL_DELAY 0
+#endif
+
+//
+// MOUSE_SCROLL_ACCELERATION_EXPONENT sets how the mouse pointer accelerates:
+//
+// acceleration exponent 0: uniform speed
+// acceleration exponent 1: uniform acceleration
+// acceleration exponent 2: uniform jerk
+//
+#ifndef MOUSE_SCROLL_ACCELERATION_EXPONENT
+#define MOUSE_SCROLL_ACCELERATION_EXPONENT 0
+#endif
+
+//
+// MOUSE_SCROLL_TIME_TO_MAXIMUM_SPEED defines how long to wait (milliseconds)
+// before the mouse pointer speed is suddenly boosted to the maximum value.
+//
+#ifndef MOUSE_SCROLL_TIME_TO_MAXIMUM_SPEED
+#define MOUSE_SCROLL_TIME_TO_MAXIMUM_SPEED 300
+#endif
+
+//
+// MOUSE_SCROLL_MAXIMUM_SPEED defines how quickly the mouse wheel can scroll.
+//
+#ifndef MOUSE_SCROLL_MAXIMUM_SPEED
+#define MOUSE_SCROLL_MAXIMUM_SPEED 10
+#endif
+
+//
+// MOUSE_SCALER_SLOW sets parameters for the &zip_xy_scaler input processor:
+// https://zmk.dev/docs/keymaps/input-processors/scaler
+//
+#ifndef MOUSE_SCALER_SLOW
+#define MOUSE_SCALER_SLOW 1 4
+#endif
+
+//
+// MOUSE_SCALER_FAST sets parameters for the &zip_xy_scaler input processor:
+// https://zmk.dev/docs/keymaps/input-processors/scaler
+//
+#ifndef MOUSE_SCALER_FAST
+#define MOUSE_SCALER_FAST 4 1
+#endif
+
+//
+// MOUSE_SCALER_WARP sets parameters for the &zip_xy_scaler input processor:
+// https://zmk.dev/docs/keymaps/input-processors/scaler
+//
+#ifndef MOUSE_SCALER_WARP
+#define MOUSE_SCALER_WARP 12 1
+#endif
+/*HACK*/};
+#ifdef ENABLE_MOUSE_KEYS
+  // ==== MOUSE-KEY <section begins> ====
+  #define ZMK_POINTING_DEFAULT_MOVE_VAL MOUSE_MOTION_MAXIMUM_SPEED
+  #define ZMK_POINTING_DEFAULT_SCRL_VAL MOUSE_SCROLL_MAXIMUM_SPEED
+  #include <dt-bindings/zmk/pointing.h>
+  &mmv {
+    delay-ms = <MOUSE_MOTION_DELAY>;
+    acceleration-exponent = <MOUSE_MOTION_ACCELERATION_EXPONENT>;
+    time-to-max-speed-ms = <MOUSE_MOTION_TIME_TO_MAXIMUM_SPEED>;
+  };
+  &msc {
+    delay-ms = <MOUSE_SCROLL_DELAY>;
+    acceleration-exponent = <MOUSE_SCROLL_ACCELERATION_EXPONENT>;
+    time-to-max-speed-ms = <MOUSE_SCROLL_TIME_TO_MAXIMUM_SPEED>;
+  };
+  //
+  // Scaling for mouse movement, based on @caksoylar's example:
+  // https://github.com/caksoylar/zmk-config/commit/0020c23c544cd7111013f0114609d1fb90e0e475
+  //
+  #include <input/processors.dtsi>
+  &mmv_input_listener {
+    #ifdef LAYER_MouseSlow
+    slow {
+      layers = <LAYER_MouseSlow>;
+      input-processors = <&zip_xy_scaler MOUSE_SCALER_SLOW>;
+    };
+    #endif
+    #ifdef LAYER_MouseFast
+    fast {
+      layers = <LAYER_MouseFast>;
+      input-processors = <&zip_xy_scaler MOUSE_SCALER_FAST>;
+    };
+    #endif
+    #ifdef LAYER_MouseWarp
+    warp {
+      layers = <LAYER_MouseWarp>;
+      input-processors = <&zip_xy_scaler MOUSE_SCALER_WARP>;
+    };
+    #endif
+  };
+  //
+  // Scaling for mouse scrolling, based on @caksoylar's example:
+  // https://github.com/caksoylar/zmk-config/commit/e35ee2f08788927683df7bbdd7fc73434473886e
+  //
+  #include <zephyr/dt-bindings/input/input-event-codes.h>
+  / {
+    input_processors {
+      zip_scroll_scaler: zip_scroll_scaler {
+        compatible = "zmk,input-processor-scaler";
+        #input-processor-cells = <2>;
+        type = <INPUT_EV_REL>;
+        codes = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
+        track-remainders;
+      };
+    };
+  };
+  &msc_input_listener {
+    #ifdef LAYER_MouseSlow
+    slow {
+      layers = <LAYER_MouseSlow>;
+      input-processors = <&zip_scroll_scaler MOUSE_SCALER_SLOW>;
+    };
+    #endif
+    #ifdef LAYER_MouseFast
+    fast {
+      layers = <LAYER_MouseFast>;
+      input-processors = <&zip_scroll_scaler MOUSE_SCALER_FAST>;
+    };
+    #endif
+    #ifdef LAYER_MouseWarp
+    warp {
+      layers = <LAYER_MouseWarp>;
+      input-processors = <&zip_scroll_scaler MOUSE_SCALER_WARP>;
+    };
+    #endif
+  };
+  // ==== MOUSE-KEY <section ends> =====
+#else
+  #define mkp none
+  #define mmv none
+  #define msc none
+  #define LCLK
+  #define MCLK
+  #define RCLK
+  #define MB1
+  #define MB2
+  #define MB3
+  #define MB4
+  #define MB5
+  #define MOVE_UP
+  #define MOVE_DOWN
+  #define MOVE_LEFT
+  #define MOVE_RIGHT
+  #define SCRL_UP
+  #define SCRL_DOWN
+  #define SCRL_LEFT
+  #define SCRL_RIGHT
+#endif
+/*HACK*//{
+
 
 / {
     keymap {
